@@ -17,7 +17,7 @@
   <style name="ActionBar" parent="android:Widget.ActionBar">
     <item name="android:background">@color/orange</item>
     <item name="android:backgroundSplit">@color/orange</item>
-    <item name="android:displayOptions">showHome|showTitle</item>
+    <item name="android:displayOptions">homeAsUp|showHome|showTitle</item>
   </style>
 
 </resources>

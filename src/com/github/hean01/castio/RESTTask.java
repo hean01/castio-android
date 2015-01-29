@@ -110,7 +110,7 @@ public class RESTTask extends AsyncTask<Bundle, Void, RESTTask.Response>
 	listener.onComplete();
     }
 
-    private static List<BasicNameValuePair> paramsToList(Bundle query)
+    private static List<BasicNameValuePair> paramsToList(Bundle params)
     {
 	ArrayList<BasicNameValuePair> formList;
 	formList = new ArrayList<BasicNameValuePair>(params.size());
@@ -127,7 +127,7 @@ public class RESTTask extends AsyncTask<Bundle, Void, RESTTask.Response>
 
     private String streamToString(InputStream is) throws IOException
     {
-	BufferReader br = null;
+	BufferedReader br = null;
 	StringBuilder sb = new StringBuilder();
 	try
 	{

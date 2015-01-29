@@ -5,15 +5,12 @@
     <string name="action_search">Search</string>
     <string name="action_prefs">Preferences</string>
 
-    <string name="pref_service_address_key">service_address</string>
     <string name="pref_service_address_title">Address</string>
     <string name="pref_service_address_summary">Address to CAST.IO service.</string>
 
-    <string name="pref_service_username_key">service_username</string>
     <string name="pref_service_username_title">Username</string>
     <string name="pref_service_username_summary">Username to use for authentication.</string>
 
-    <string name="pref_service_password_key">service_username</string>
     <string name="pref_service_password_title">Password</string>
     <string name="pref_service_password_summary">Password to use for authentication..</string>
 

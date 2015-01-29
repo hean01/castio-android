@@ -7,19 +7,19 @@
 
 
     <EditTextPreference
-        android:key="@string/pref_service_address_key"
+        android:key="service_address"
 	android:title="@string/pref_service_address_title"
         android:summary="@string/pref_service_address_summary"
         />
 
     <EditTextPreference
-        android:key="@string/pref_service_username_key"
+        android:key="service_username"
         android:title="@string/pref_service_username_title"
         android:summary="@string/pref_service_username_summary"
         />
 
     <EditTextPreference
-        android:key="@string/pref_service_password_key"
+        android:key="service_password"
         android:title="@string/pref_service_password_title"
         android:summary="@string/pref_service_password_summary"
 	android:inputType="textPassword"

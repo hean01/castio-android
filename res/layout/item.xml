@@ -4,11 +4,14 @@
  android:orientation="horizontal" >
 
   <ImageView
+      android:id="@+id/ivImage"
       android:layout_width="100dp"
       android:layout_height="100dp"
+      android:padding="10dp"
       android:src="@drawable/icon" />
 
   <LinearLayout
+      android:padding="10dp"
       android:layout_width="fill_parent"
       android:layout_height="wrap_content"
       android:orientation="vertical" >
@@ -17,12 +20,16 @@
       android:id="@+id/tvTitle"
       android:textSize="18.0sp"
       android:layout_width="fill_parent"
+      android:ellipsize="end"
+      android:singleLine="true"
       android:layout_height="wrap_content"/>
 
     <TextView
       android:id="@+id/tvDescription"
       android:layout_width="fill_parent"
-      android:layout_height="wrap_content"/>
+      android:layout_height="wrap_content"
+      android:textColor="#80ffffff"
+      />
 
   </LinearLayout>
 </LinearLayout>

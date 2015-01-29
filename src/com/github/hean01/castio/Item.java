@@ -20,12 +20,25 @@ public class Item
 
     public Item(JSONObject object)
     {
+	JSONObject md;
 	try
 	{
-	    this.title = object.getString("metadata.title");
-	    this.description = object.getString("metadata.description");
-	    this.uri = object.getString("uri");
-	    this.type = object.getString("type");
+	    // get item properties
+	    if (object.has("uri"))
+		this.uri = object.getString("uri");
+
+	    if (object.has("type"))
+		this.type = object.getString("type");
+
+	    // parse metadata
+	    if (object.has("metadata"))
+	    {
+		md = object.getJSONObject("metadata");
+		if (md.has("title"))
+		    this.title = md.getString("title");
+		if (md.has("description"))
+		    this.description = md.getString("description");
+	    }
 
 	    // TODO: load icon if specified or fallback to type specific icon
 

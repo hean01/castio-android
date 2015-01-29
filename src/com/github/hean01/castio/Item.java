@@ -1,6 +1,14 @@
 package com.github.hean01.castio;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.net.URL;
+import java.net.MalformedURLException;
+
+import android.content.Context;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -12,13 +20,9 @@ public class Item
     public String description;
     public String type;
     public String uri;
+    Bitmap image;
 
-    public Item()
-    {
-	// Dummy
-    }
-
-    public Item(JSONObject object)
+    public Item(Context ctx, JSONObject object)
     {
 	JSONObject md;
 	try
@@ -38,10 +42,35 @@ public class Item
 		    this.title = md.getString("title");
 		if (md.has("description"))
 		    this.description = md.getString("description");
+
+		// Try load image from specified url
+		if (md.has("image"))
+		{
+		    try
+		    {
+			Integer crop = 4;
+			URL url = new URL(md.getString("image"));
+			image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+			image = Bitmap.createBitmap(image, crop, crop,
+						    image.getWidth() - crop*2,
+						    image.getHeight() - crop*2);
+		    }
+		    catch (MalformedURLException e)
+		    {
+			e.printStackTrace();
+		    }
+		    catch (IOException e)
+		    {
+			e.printStackTrace();
+		    }
+		}
+
 	    }
 
-	    // TODO: load icon if specified or fallback to type specific icon
-
+	    if (image == null)
+	    {
+		image = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.icon);
+	    }
 	}
 	catch (JSONException e)
 	{
@@ -50,14 +79,14 @@ public class Item
     }
 
     // Factory creating list of objects from JSONArray
-    public static ArrayList<Item> fromJson(JSONArray objects)
+    public static ArrayList<Item> fromJson(Context ctx, JSONArray objects)
     {
 	ArrayList<Item> items = new ArrayList<Item>();
 	for (int i = 0; i < objects.length(); i++)
 	{
 	    try
 	    {
-		items.add(new Item(objects.getJSONObject(i)));
+		items.add(new Item(ctx, objects.getJSONObject(i)));
 	    }
 	    catch (JSONException e)
 	    {

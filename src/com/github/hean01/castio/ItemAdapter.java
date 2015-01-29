@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.TextView;
 import android.widget.ArrayAdapter;
 import android.view.View;
+import android.widget.ImageView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import java.util.ArrayList;
@@ -31,6 +32,9 @@ public class ItemAdapter extends ArrayAdapter<Item>
 
 	TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
 	tvDescription.setText(item.description);
+
+	ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
+	ivImage.setImageBitmap(item.image);
 
 	return convertView;
     }

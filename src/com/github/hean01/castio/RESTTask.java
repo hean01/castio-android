@@ -84,10 +84,15 @@ public class RESTTask extends AsyncTask<Bundle, Void, RESTTask.Response>
 	    HttpResponse response = client.execute(request);
 	    HttpEntity entity = response.getEntity();
 
+	    Response resp = null;
 	    if (entity == null)
-		return new Response(response.getStatusLine().getStatusCode(), "");
+		resp = new Response(response.getStatusLine().getStatusCode(), "");
+	    else
+		resp = new Response(response.getStatusLine().getStatusCode(),  EntityUtils.toString(entity));
 
-	    return new Response(response.getStatusLine().getStatusCode(),  EntityUtils.toString(entity));
+	    listener.onResponse(resp);
+
+	    return resp;
 	}
 	catch (URISyntaxException e)
 	{
@@ -104,9 +109,6 @@ public class RESTTask extends AsyncTask<Bundle, Void, RESTTask.Response>
     @Override
     protected void onPostExecute(Response response)
     {
-	if (response != null)
-	    listener.onResponse(response);
-
 	listener.onComplete();
     }
 

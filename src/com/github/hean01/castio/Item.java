@@ -19,10 +19,20 @@ import org.json.JSONException;
 
 public class Item implements Parcelable
 {
+    /* TODO: This is unbareable, consider to store the JSONObject
+       instead of each string member which also make implementation of
+       parcelable a lot easier. Just write the json text instead of
+       each string data.
+     */
     public String title;
     public String description;
     public String type;
     public String uri;
+    public String artist;
+    public String listeners;
+    public String on_air;
+    public String year;
+
     Bitmap image;
 
     public Item(Context ctx, JSONObject object)
@@ -31,20 +41,35 @@ public class Item implements Parcelable
 	try
 	{
 	    // get item properties
-	    if (object.has("uri"))
-		this.uri = object.getString("uri");
-
 	    if (object.has("type"))
 		this.type = object.getString("type");
+
+	    if (object.has("uri"))
+		this.uri = object.getString("uri");
 
 	    // parse metadata
 	    if (object.has("metadata"))
 	    {
 		md = object.getJSONObject("metadata");
+
+		// Get fields for all types
 		if (md.has("title"))
 		    this.title = md.getString("title");
 		if (md.has("description"))
 		    this.description = md.getString("description");
+		if (md.has("year"))
+		    this.year = md.getString("year");
+
+		// Get music metadata
+		if (md.has("artist"))
+		    this.artist = md.getString("artist");
+
+		// Get radiostation metadata
+		if (md.has("listeners"))
+		    this.listeners = md.getString("listeners");
+
+		if (md.has("on_air"))
+		    this.on_air = md.getString("on_air");
 
 		// Try load image from specified url
 		if (md.has("image"))
@@ -108,10 +133,17 @@ public class Item implements Parcelable
     @Override
     public void writeToParcel(Parcel out, int flags) {
 	// TODO Auto-generated method stub
-	out.writeString(title);
-	out.writeString(description);
 	out.writeString(type);
 	out.writeString(uri);
+
+	out.writeString(title);
+	out.writeString(description);
+	out.writeString(year);
+
+	out.writeString(artist);
+
+	out.writeString(listeners);
+	out.writeString(on_air);
     }
 
     public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
@@ -125,9 +157,16 @@ public class Item implements Parcelable
     };
 
     private Item(Parcel in) {
-	title = in.readString();
-	description = in.readString();
 	type = in.readString();
 	uri = in.readString();
+
+	title = in.readString();
+	description = in.readString();
+	year = in.readString();
+
+	artist = in.readString();
+
+	listeners = in.readString();
+	on_air = in.readString();
     }
 };

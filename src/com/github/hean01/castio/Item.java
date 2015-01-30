@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import android.content.Context;
 import android.os.Parcelable;
 import android.os.Parcel;
+import android.util.Log;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,90 +20,77 @@ import org.json.JSONException;
 
 public class Item implements Parcelable
 {
-    /* TODO: This is unbareable, consider to store the JSONObject
-       instead of each string member which also make implementation of
-       parcelable a lot easier. Just write the json text instead of
-       each string data.
-     */
-    public String title;
-    public String description;
-    public String type;
-    public String uri;
-    public String artist;
-    public String listeners;
-    public String on_air;
-    public String year;
+    private static final String TAG = "Item";
+    private JSONObject object;
+    private Bitmap image;
 
-    Bitmap image;
+    private JSONObject getObject(String parts[])
+    {
+	JSONObject obj = object;
+	for (int i = 0; i < parts.length - 1; i++)
+	{
+	    obj = obj.optJSONObject(parts[i]);
+
+	    if (obj == null)
+		break;
+	}
+
+	return obj;
+    }
+
+    public String get(String attribute)
+    {
+	String [] parts = attribute.split("\\.");
+
+	// Check if accessing non recursive attribute
+	if (parts.length == 0)
+	    return object.optString(attribute);
+
+	// Retreive recursive object
+	JSONObject obj = getObject(parts);
+	if (obj == null)
+	    return null;
+
+	return obj.optString(parts[parts.length - 1], null);
+    }
+
+    public Bitmap getImage()
+    {
+	return image;
+    }
 
     public Item(Context ctx, JSONObject object)
     {
-	JSONObject md;
-	try
+	this.object = object;
+
+	// If image is specified, try load it
+	String image_uri = get("metadata.image");
+	if (image_uri != null)
 	{
-	    // get item properties
-	    if (object.has("type"))
-		this.type = object.getString("type");
-
-	    if (object.has("uri"))
-		this.uri = object.getString("uri");
-
-	    // parse metadata
-	    if (object.has("metadata"))
+	    try
 	    {
-		md = object.getJSONObject("metadata");
-
-		// Get fields for all types
-		if (md.has("title"))
-		    this.title = md.getString("title");
-		if (md.has("description"))
-		    this.description = md.getString("description");
-		if (md.has("year"))
-		    this.year = md.getString("year");
-
-		// Get music metadata
-		if (md.has("artist"))
-		    this.artist = md.getString("artist");
-
-		// Get radiostation metadata
-		if (md.has("listeners"))
-		    this.listeners = md.getString("listeners");
-
-		if (md.has("on_air"))
-		    this.on_air = md.getString("on_air");
-
-		// Try load image from specified url
-		if (md.has("image"))
-		{
-		    try
-		    {
-			Integer crop = 4;
-			URL url = new URL(md.getString("image"));
-			image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-			image = Bitmap.createBitmap(image, crop, crop,
-						    image.getWidth() - crop*2,
-						    image.getHeight() - crop*2);
-		    }
-		    catch (MalformedURLException e)
-		    {
-			e.printStackTrace();
-		    }
-		    catch (IOException e)
-		    {
-			e.printStackTrace();
-		    }
-		}
-
+		Integer crop = 4;
+		URL url = new URL(image_uri);
+		image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+		image = Bitmap.createBitmap(image, crop, crop,
+					    image.getWidth() - crop*2,
+					    image.getHeight() - crop*2);
 	    }
-
-	    if (image == null)
+	    catch (MalformedURLException e)
 	    {
-		image = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.icon);
+		e.printStackTrace();
+	    }
+	    catch (IOException e)
+	    {
+		e.printStackTrace();
 	    }
 	}
-	catch (JSONException e)
+
+	// If not image was loaded, get one from resources
+	// corresponding to item type
+	if (image == null)
 	{
-	    e.printStackTrace();
+	    image = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.icon);
 	}
     }
 
@@ -126,24 +114,16 @@ public class Item implements Parcelable
 
     @Override
     public int describeContents() {
-	// TODO Auto-generated method stub
 	return 0;
     }
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-	// TODO Auto-generated method stub
-	out.writeString(type);
-	out.writeString(uri);
+	// Write JSONObject to parcel
+	out.writeString(object.toString());
 
-	out.writeString(title);
-	out.writeString(description);
-	out.writeString(year);
-
-	out.writeString(artist);
-
-	out.writeString(listeners);
-	out.writeString(on_air);
+	// Write image to parcel
+	image.writeToParcel(out, 0);
     }
 
     public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
@@ -156,17 +136,20 @@ public class Item implements Parcelable
 	}
     };
 
-    private Item(Parcel in) {
-	type = in.readString();
-	uri = in.readString();
+    // Construct Item from parcel
+    private Item(Parcel in)
+    {
+	// Get JSONObject from parcel
+	try
+	{
+	    this.object = new JSONObject(in.readString());
+	}
+	catch(JSONException e)
+	{
+	    e.printStackTrace();
+	}
 
-	title = in.readString();
-	description = in.readString();
-	year = in.readString();
-
-	artist = in.readString();
-
-	listeners = in.readString();
-	on_air = in.readString();
+	// Get image from parcel
+	this.image = Bitmap.CREATOR.createFromParcel(in);
     }
 };

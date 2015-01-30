@@ -28,13 +28,13 @@ public class ItemAdapter extends ArrayAdapter<Item>
 	}
 
 	TextView tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
-	tvTitle.setText(item.title);
+	tvTitle.setText(item.get("metadata.title"));
 
 	TextView tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
-	tvDescription.setText(item.description);
+	tvDescription.setText(item.get("metadata.description"));
 
 	ImageView ivImage = (ImageView) convertView.findViewById(R.id.ivImage);
-	ivImage.setImageBitmap(item.image);
+	ivImage.setImageBitmap(item.getImage());
 
 	return convertView;
     }

@@ -27,12 +27,12 @@ public class BrowseActivity extends MainActivity {
 
 	// Set action bar title and description for this activity
 	ActionBar ab = getActionBar();
-	ab.setTitle(item.title);
-	ab.setSubtitle(item.description);
+	ab.setTitle(item.get("metadata.title"));
+	ab.setSubtitle(item.get("metadata.description"));
 
 	// Get content view and add ItemListView
 	setContentView(R.layout.front_layout);
 	LinearLayout content = (LinearLayout) findViewById(R.id.container);
-	content.addView(new ItemsListView(this, item.uri));
+	content.addView(new ItemsListView(this, item.get("uri")));
     }
 }

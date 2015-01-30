@@ -83,7 +83,9 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 	if (item == null)
 	    return;
 
-	if (item.type != null && item.type.equals("folder"))
+	String value;
+	value = item.get("type");
+	if (value != null && value.equals("folder"))
 	{
 	    Intent intent = new Intent((Activity)this.getContext(), BrowseActivity.class);
 	    Bundle args = new Bundle();
@@ -93,10 +95,18 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 	}
 	else
 	{
-	    Uri uri = Uri.parse(item.uri);
-	    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-	    intent.setData(uri);
-	    this.getContext().startActivity(intent);
+	    value = item.get("uri");
+	    if (value != null)
+	    {
+		Uri uri = Uri.parse(value);
+		Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+		intent.setData(uri);
+		this.getContext().startActivity(intent);
+	    }
+	    else
+	    {
+		// TODO: report using toast i think...
+	    }
 	}
     }
 

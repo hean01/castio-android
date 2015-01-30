@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.ImageView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,8 +45,8 @@ public class ItemDetailsActivity extends MainActivity {
 
 	// Set action bar title and description for this activity
 	ActionBar ab = getActionBar();
-	ab.setTitle(item.title);
-	ab.setSubtitle(item.description);
+	ab.setTitle(item.get("metadata.title"));
+	ab.setSubtitle(item.get("metadata.description"));
 
 	// Get content view and add ItemListView
 	LayoutInflater inflater = (LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -53,24 +54,31 @@ public class ItemDetailsActivity extends MainActivity {
 	setContentView(view);
 
 	// Set data into view
-	tv = (TextView)view.findViewById(R.id.title); tv.setText(item.title);
-	tv = (TextView)view.findViewById(R.id.description); tv.setText(item.description);
+	tv = (TextView)view.findViewById(R.id.title); tv.setText(item.get("metadata.title"));
+	tv = (TextView)view.findViewById(R.id.description); tv.setText(item.get("metadata.description"));
 
-	// FIXME: parcelable item doesn't have a bitmap
-	// view.findViewById(R.id.ivImage)setImageBitmap(item.image);
+	// Set image
+	ImageView iv = (ImageView)view.findViewById(R.id.image); iv.setImageBitmap(item.getImage());
 
 	// Populate dynamic item metadata
 	LinearLayout md = (LinearLayout)view.findViewById(R.id.metadata);
-	if (item.artist != null)
-	    md.addView(createMetadataView("Artist", item.artist, md));
-	if (item.year != null)
-	    md.addView(createMetadataView("Year", item.year, md));
-	if (item.on_air != null)
-	    md.addView(createMetadataView("Listeners", item.listeners, md));
 
-	if (item.on_air != null)
-	    md.addView(createMetadataView("On Air", item.on_air, md));
+	String value;
+	value = item.get("metadata.artist");
+	if (value != null)
+	    md.addView(createMetadataView("Artist", value, md));
 
+	value = item.get("metadata.year");
+	if (value != null)
+	    md.addView(createMetadataView("Year", value, md));
+
+	value = item.get("metadata.listeners");
+	if (value != null)
+	    md.addView(createMetadataView("Listeners", value, md));
+
+	value = item.get("metadata.on_air");
+	if (value != null)
+	    md.addView(createMetadataView("On Air", value, md));
 
     }
 }

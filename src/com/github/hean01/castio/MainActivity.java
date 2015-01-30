@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
 	setContentView(R.layout.front_layout);
 	content = (LinearLayout) findViewById(R.id.container);
 
-	content.addView(new ItemsListView(this));
+	content.addView(new ItemsListView(this, "/providers/kwed"));
     }
 
     @Override

@@ -1,11 +1,14 @@
 package com.github.hean01.castio;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.net.URL;
 import java.net.MalformedURLException;
 
 import android.content.Context;
+import android.os.Parcelable;
+import android.os.Parcel;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +17,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class Item
+public class Item implements Parcelable
 {
     public String title;
     public String description;
@@ -96,4 +99,35 @@ public class Item
 	return items;
     }
 
+    @Override
+    public int describeContents() {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel out, int flags) {
+	// TODO Auto-generated method stub
+	out.writeString(title);
+	out.writeString(description);
+	out.writeString(type);
+	out.writeString(uri);
+    }
+
+    public static final Parcelable.Creator<Item> CREATOR = new Parcelable.Creator<Item>() {
+	public Item createFromParcel(Parcel in) {
+	    return new Item(in);
+	}
+
+	public Item[] newArray(int size) {
+	    return new Item[size];
+	}
+    };
+
+    private Item(Parcel in) {
+	title = in.readString();
+	description = in.readString();
+	type = in.readString();
+	uri = in.readString();
+    }
 };

@@ -20,6 +20,14 @@
         </intent-filter>
       </activity>
 
+      <activity android:name="BrowseActivity" android:label="@string/app_name"
+		android:parentActivityName="com.github.hean01.castio.MainActivity">
+	<intent-filter>
+	  <action android:name="android.intent.action.VIEW" />
+	  <category android:name="android.intent.category.DEFAULT" />
+	</intent-filter>
+      </activity>
+
       <activity android:name="SettingsActivity" android:label="@string/app_name"
 		android:parentActivityName="com.github.hean01.castio.MainActivity">
       </activity>

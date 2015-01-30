@@ -5,6 +5,7 @@ import java.util.ArrayList;;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.Context;
+import android.app.Activity;
 
 import android.view.View;
 import android.widget.ListView;
@@ -21,13 +22,16 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 {
     private final String TAG = "ItemsListView";
 
+    private String uri;
     private Object task;
     private ArrayAdapter<Item> adapter;
 
-    public ItemsListView(Context ctx)
+    public ItemsListView(Context ctx, String uri)
     {
 	super(ctx);
 	ListView.LayoutParams lp;
+
+	this.uri = uri;
 
 	// create and set item adapter
 	ArrayList<Item> items = new ArrayList<Item>();
@@ -73,21 +77,31 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 
     public void onItemPress(int pos, long id)
     {
-	Log.d("############", "Item " + pos + " pressed.");
-
 	// launch view intent of item uri
 	ArrayAdapter adapter = (ArrayAdapter) this.getAdapter();
 	Item item = (Item) adapter.getItem(pos);
-	Uri uri = Uri.parse(item.uri);
-	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-	intent.setData(uri);
+	if (item == null)
+	    return;
 
-	this.getContext().startActivity(intent);
+	if (item.type != null && item.type.equals("folder"))
+	{
+	    Intent intent = new Intent((Activity)this.getContext(), BrowseActivity.class);
+	    Bundle args = new Bundle();
+	    args.putParcelable("item", item);
+	    intent.putExtras(args);
+	    this.getContext().startActivity(intent);
+	}
+	else
+	{
+	    Uri uri = Uri.parse(item.uri);
+	    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	    intent.setData(uri);
+	    this.getContext().startActivity(intent);
+	}
     }
 
     public boolean onItemLongPress(int pos, long id)
     {
-	Log.d("############", "Item " + pos + " long pressed.");
 	return true;
     }
 
@@ -97,9 +111,7 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 	query.putShort("offset", offset);
 	query.putShort("limit", limit);
 
-	Bundle args = ServiceRESTTask.arguments(this.getContext(),
-						"/providers/rad.io/nearest",
-						query);
+	Bundle args = ServiceRESTTask.arguments(this.getContext(), uri, query);
 
 	task = new ServiceRESTTask(this).execute(args);
     }

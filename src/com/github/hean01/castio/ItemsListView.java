@@ -102,6 +102,18 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 
     public boolean onItemLongPress(int pos, long id)
     {
+	// launch view intent of item uri
+	ArrayAdapter adapter = (ArrayAdapter) this.getAdapter();
+	Item item = (Item) adapter.getItem(pos);
+	if (item == null)
+	    return false;
+
+	// launch item detail activity
+	Intent intent = new Intent((Activity)this.getContext(), ItemDetailsActivity.class);
+	Bundle args = new Bundle();
+	args.putParcelable("item", item);
+	intent.putExtras(args);
+	this.getContext().startActivity(intent);
 	return true;
     }
 

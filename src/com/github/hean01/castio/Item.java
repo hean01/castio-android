@@ -75,6 +75,8 @@ public class Item implements Parcelable
 		image = Bitmap.createBitmap(image, crop, crop,
 					    image.getWidth() - crop*2,
 					    image.getHeight() - crop*2);
+
+		image = Bitmap.createScaledBitmap(image, 320, 200, true);
 	    }
 	    catch (MalformedURLException e)
 	    {

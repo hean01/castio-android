@@ -64,6 +64,10 @@ public class ItemDetailsActivity extends MainActivity {
 	LinearLayout md = (LinearLayout)view.findViewById(R.id.metadata);
 
 	String value;
+	value = item.get("metadata.length");
+	if (value != null)
+	    md.addView(createMetadataView("Length", value, md));
+
 	value = item.get("metadata.artist");
 	if (value != null)
 	    md.addView(createMetadataView("Artist", value, md));
@@ -75,6 +79,14 @@ public class ItemDetailsActivity extends MainActivity {
 	value = item.get("metadata.listeners");
 	if (value != null)
 	    md.addView(createMetadataView("Listeners", value, md));
+
+	value = item.get("metadata.episode");
+	if (value != null)
+	    md.addView(createMetadataView("Episode", value, md));
+
+	value = item.get("metadata.air_date");
+	if (value != null)
+	    md.addView(createMetadataView("Air date", value, md));
 
 	value = item.get("metadata.on_air");
 	if (value != null)

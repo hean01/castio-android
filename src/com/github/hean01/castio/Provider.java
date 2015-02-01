@@ -72,6 +72,8 @@ public class Provider implements Parcelable
 		if (resp.statusLine.getStatusCode() == 200)
 		{
 		    image = BitmapFactory.decodeByteArray(resp.data, 0, resp.data.length);
+		    Float ratio = image.getWidth() / (float)image.getHeight();
+		    image = Bitmap.createScaledBitmap(image, 256, (int)Math.round(256/ratio), true);
 		}
 	    }
 	    catch (URISyntaxException e)

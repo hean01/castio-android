@@ -78,7 +78,8 @@ public class Item implements Parcelable
 						image.getWidth() - crop*2,
 						image.getHeight() - crop*2);
 
-		    image = Bitmap.createScaledBitmap(image, 320, 200, true);
+		    Float ratio = image.getWidth() / (float)image.getHeight();
+		    image = Bitmap.createScaledBitmap(image, 256, (int)Math.round(256/ratio), true);
 		}
 	    }
 	    catch (URISyntaxException e)

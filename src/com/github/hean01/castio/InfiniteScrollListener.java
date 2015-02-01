@@ -66,7 +66,7 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
 	// fetch the data.
 	if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold))
 	{
-	    int offset = firstVisibleItem + visibleItemCount;
+	    int offset = totalItemCount + 1;
 	    onLoadMore((short)offset, (short)(visibleItemCount*4));
 	    loading = true;
 	}

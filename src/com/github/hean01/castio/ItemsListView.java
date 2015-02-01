@@ -22,6 +22,7 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 {
     private final String TAG = "ItemsListView";
 
+    private boolean have_all_items;
     private String uri;
     private Object task;
     private ArrayAdapter<Item> adapter;
@@ -30,6 +31,7 @@ public class ItemsListView extends ListView implements RESTTask.Listener
     {
 	super(ctx);
 	ListView.LayoutParams lp;
+	have_all_items = false;
 
 	this.uri = uri;
 
@@ -129,6 +131,9 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 
     public void onLoadMoreItems(short offset, short limit)
     {
+	if (have_all_items)
+	    return;
+
 	Bundle query = new Bundle();
 	query.putShort("offset", offset);
 	query.putShort("limit", limit);
@@ -153,6 +158,12 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 	{
 	    result = new JSONArray(response.data);
 	    items = Item.fromJson(this.getContext(), result);
+
+	    if (items.isEmpty())
+	    {
+		have_all_items = true;
+		return;
+	    }
 
 	    // Prevent notify on change when adding items
 	    adapter.setNotifyOnChange(false);

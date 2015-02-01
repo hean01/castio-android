@@ -22,6 +22,7 @@ public class ProvidersListView extends ListView implements RESTTask.Listener
 {
     private final String TAG = "ProvidersListView";
 
+    private boolean have_all_items;
     private String uri;
     private Object task;
     private ArrayAdapter<Provider> adapter;
@@ -29,6 +30,7 @@ public class ProvidersListView extends ListView implements RESTTask.Listener
     public ProvidersListView(Context ctx)
     {
 	super(ctx);
+	have_all_items = false;
 	ListView.LayoutParams lp;
 
 	this.uri = "/providers";
@@ -108,6 +110,10 @@ public class ProvidersListView extends ListView implements RESTTask.Listener
 
     public void onLoadMoreProviders(short offset, short limit)
     {
+	if (have_all_items)
+	    return;
+
+
 	Bundle query = new Bundle();
 	query.putShort("offset", offset);
 	query.putShort("limit", limit);
@@ -132,6 +138,12 @@ public class ProvidersListView extends ListView implements RESTTask.Listener
 	{
 	    result = new JSONArray(response.data);
 	    providers = Provider.fromJson(this.getContext(), result);
+
+	    if (providers.isEmpty())
+	    {
+		have_all_items = true;
+		return;
+	    }
 
 	    // Prevent notify on change when adding providers
 	    adapter.setNotifyOnChange(false);

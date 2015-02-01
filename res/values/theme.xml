@@ -31,4 +31,8 @@
     <item name="android:dropDownListViewStyle">@android:style/Widget.Holo.Light.ListView.DropDown</item>
   </style>
 
+ <style name="noAnimTheme" parent="CastIO">
+   <item name="android:windowAnimationStyle">@null</item>
+ </style>
+
 </resources>

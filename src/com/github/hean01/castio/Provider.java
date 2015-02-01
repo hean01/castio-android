@@ -3,7 +3,7 @@ package com.github.hean01.castio;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.net.URL;
-import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 
 import android.content.Context;
 import android.os.Parcelable;
@@ -69,13 +69,13 @@ public class Provider implements Parcelable
 	    try
 	    {
 		Integer crop = 4;
-		URL url = new URL(image_uri);
-		image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-		image = Bitmap.createBitmap(image, crop, crop,
-					    image.getWidth() - crop*2,
-					    image.getHeight() - crop*2);
+		Service.Response resp = Service.getCache(ctx, image_uri);
+		if (resp.statusLine.getStatusCode() == 200)
+		{
+		    image = BitmapFactory.decodeByteArray(resp.data, 0, resp.data.length);
+		}
 	    }
-	    catch (MalformedURLException e)
+	    catch (URISyntaxException e)
 	    {
 		e.printStackTrace();
 	    }

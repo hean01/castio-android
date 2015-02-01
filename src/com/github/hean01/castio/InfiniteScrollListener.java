@@ -6,27 +6,13 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
 {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
-    private int visibleThreshold = 1;
-    // The current offset index of data you have loaded
-    private int currentPage = 0;
+    private int threshold = 10;
     // The total number of items in the dataset after the last load
     private int previousTotalItemCount = 0;
     // True if we are still waiting for the last set of data to load.
     private boolean loading = true;
-    // Sets the starting page index
-    private int startingPageIndex = 0;
 
     public InfiniteScrollListener() {}
-
-    public InfiniteScrollListener(int visibleThreshold) {
-	this.visibleThreshold = visibleThreshold;
-    }
-
-    public InfiniteScrollListener(int visibleThreshold, int startPage) {
-	this.visibleThreshold = visibleThreshold;
-	this.startingPageIndex = startPage;
-	this.currentPage = startPage;
-    }
 
     // This happens many times a second during a scroll, so be wary of the code
     // you place here.
@@ -36,12 +22,16 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem,
 			 int visibleItemCount, int totalItemCount) {
+
+	// Adapt threshold size to visibleItemCount
+	if (threshold != (visibleItemCount * 2))
+	    threshold = (visibleItemCount * 2);
+
 	// If the total item count is zero and the previous isn't, assume the
 	// list is invalidated and should be reset back to initial state
 	// If there are no items in the list, assume that initial items are
 	// loading
 	if (!loading && (totalItemCount < previousTotalItemCount)) {
-	    this.currentPage = this.startingPageIndex;
 	    this.previousTotalItemCount = totalItemCount;
 	    if (totalItemCount == 0) {
 		this.loading = true;
@@ -56,7 +46,6 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
 	    if (totalItemCount > previousTotalItemCount) {
 		loading = false;
 		previousTotalItemCount = totalItemCount;
-		currentPage++;
 	    }
 	}
 
@@ -64,10 +53,10 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
 	// the visibleThreshold and need to reload more data.
 	// If we do need to reload some more data, we execute onLoadMore to
 	// fetch the data.
-	if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold))
+	if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + threshold))
 	{
 	    int offset = totalItemCount + 1;
-	    onLoadMore((short)offset, (short)(visibleItemCount*4));
+	    onLoadMore((short)offset, (short)(visibleItemCount*2));
 	    loading = true;
 	}
     }

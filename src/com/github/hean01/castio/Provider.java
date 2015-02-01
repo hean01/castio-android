@@ -68,7 +68,6 @@ public class Provider implements Parcelable
 	{
 	    try
 	    {
-		Integer crop = 4;
 		Service.Response resp = Service.getCache(ctx, image_uri);
 		if (resp.statusLine.getStatusCode() == 200)
 		{

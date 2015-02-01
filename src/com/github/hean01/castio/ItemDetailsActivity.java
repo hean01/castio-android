@@ -20,7 +20,8 @@ import java.util.Queue;
 
 import android.widget.LinearLayout;
 
-public class ItemDetailsActivity extends MainActivity {
+public class ItemDetailsActivity extends MainActivity
+{
     private final static String TAG = "ItemDetailsActivity";
     private Item item;
 
@@ -35,7 +36,20 @@ public class ItemDetailsActivity extends MainActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+	// Make actionbar HomeAsUp act as back button.
+	if (item.getItemId() == android.R.id.home)
+	{
+	    onBackPressed();
+	    return true;
+	}
+	return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
 	super.onCreate(savedInstanceState);
 	TextView tv;
 

@@ -20,7 +20,8 @@ import java.util.Queue;
 
 import android.widget.LinearLayout;
 
-public class ProviderDetailsActivity extends MainActivity {
+public class ProviderDetailsActivity extends MainActivity
+{
     private final static String TAG = "ProviderDetailsActivity";
     private Provider provider;
 
@@ -35,9 +36,20 @@ public class ProviderDetailsActivity extends MainActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+	// Make actionbar HomeAsUp act as back button.
+	if (item.getItemId() == android.R.id.home)
+	{
+	    onBackPressed();
+	    return true;
+	}
+	return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
-	TextView tv;
 
 	// get item from extras
 	Bundle args = getIntent().getExtras();
@@ -54,6 +66,7 @@ public class ProviderDetailsActivity extends MainActivity {
 	setContentView(view);
 
 	// Set data into view
+	TextView tv;
 	tv = (TextView)view.findViewById(R.id.name); tv.setText(provider.get("name"));
 	tv = (TextView)view.findViewById(R.id.description); tv.setText(provider.get("description"));
 

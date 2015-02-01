@@ -14,13 +14,15 @@ import java.util.Queue;
 
 import android.widget.LinearLayout;
 
-public class BrowseActivity extends MainActivity {
+public class BrowseActivity extends MainActivity
+{
     private final static String TAG = "BrowseActivity";
     private Item item;
     private Provider provider;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
 	super.onCreate(savedInstanceState);
 	ActionBar ab = getActionBar();
 	Bundle args = getIntent().getExtras();
@@ -43,5 +45,17 @@ public class BrowseActivity extends MainActivity {
 	    ab.setSubtitle(provider.get("description"));
 	    content.addView(new ItemsListView(this, "/providers/" + provider.get("id")));
 	}
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+	// Make actionbar HomeAsUp act as back button.
+	if (item.getItemId() == android.R.id.home)
+	{
+	    onBackPressed();
+	    return true;
+	}
+	return super.onOptionsItemSelected(item);
     }
 }

@@ -16,8 +16,8 @@
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="radiostation.svg"
    inkscape:export-filename="/home/henrik/Development/castio-android.git/res/drawable-xxxhdpi/radiostation.png"
-   inkscape:export-xdpi="135"
-   inkscape:export-ydpi="135">
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4">
     <filter
@@ -87,7 +87,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>

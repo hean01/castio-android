@@ -21,19 +21,27 @@ import android.os.Bundle;
 public class ItemsListView extends ListView implements RESTTask.Listener
 {
     private final String TAG = "ItemsListView";
-
+    private boolean prefetch;
     private boolean have_all_items;
     private String uri;
     private Object task;
     private ArrayAdapter<Item> adapter;
 
-    public ItemsListView(Context ctx, String uri)
+    private Listener listener;
+
+    public interface Listener
+    {
+	void onPrefetchFinished();
+    }
+
+    public ItemsListView(Context ctx, String uri, Listener listener)
     {
 	super(ctx);
 	ListView.LayoutParams lp;
 	have_all_items = false;
 
 	this.uri = uri;
+	this.listener = listener;
 
 	// create and set item adapter
 	ArrayList<Item> items = new ArrayList<Item>();
@@ -73,7 +81,7 @@ public class ItemsListView extends ListView implements RESTTask.Listener
 		}
 	    });
 
-	// pre fetch a few items the the list
+	prefetch = true;
 	onLoadMoreItems((short)0, (short)20);
     }
 
@@ -179,6 +187,13 @@ public class ItemsListView extends ListView implements RESTTask.Listener
     public void onComplete()
     {
 	task = null;
+
+	if (prefetch)
+	{
+	    prefetch = false;
+	    if (listener != null)
+		listener.onPrefetchFinished();
+	}
 
 	// Notify data change on main ui thread
 	adapter.notifyDataSetChanged();

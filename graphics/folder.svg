@@ -22,38 +22,6 @@
      id="defs4">
     <filter
        inkscape:collect="always"
-       id="filter3903">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.85759231"
-         id="feGaussianBlur3905" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3907"
-       x="-0.10724215"
-       width="1.2144843"
-       y="-0.037824856"
-       height="1.0756497">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.66865504"
-         id="feGaussianBlur3909" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3911"
-       x="-0.10049459"
-       width="1.2009892"
-       y="-0.035444955"
-       height="1.0708899">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.62658396"
-         id="feGaussianBlur3913" />
-    </filter>
-    <filter
-       inkscape:collect="always"
        id="filter3840">
       <feGaussianBlur
          inkscape:collect="always"
@@ -76,9 +44,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="-13.910673"
-     inkscape:cy="63.91924"
+     inkscape:zoom="2.8"
+     inkscape:cx="70.756628"
+     inkscape:cy="81.368324"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -95,7 +63,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -105,12 +73,12 @@
      id="layer1"
      transform="translate(0,-924.36218)">
     <path
-       style="opacity:0.7;fill:#ffffff;fill-opacity:1;stroke:none"
+       style="opacity:0.13061224;fill:#ffffff;fill-opacity:1;stroke:none"
        d="m 88.330357,952.04522 c -2.77,0 -5,2.51772 -5,5.64512 l 0,1.48185 -55.46875,0 c -2.77,0 -5,2.51772 -5,5.64512 l 0,62.83729 c 0,3.1274 2.23,5.6451 5,5.6451 l 86.718753,0 c 2.77,0 5,-2.5177 5,-5.6451 l 0,-28.40205 c 0.0799,-0.40201 0.125,-0.84014 0.125,-1.27016 l 0,-40.29205 c 0,-3.1274 -2.23,-5.64512 -5,-5.64512 l -26.375003,0 z"
        id="rect3004"
        inkscape:connector-curvature="0" />
     <rect
-       style="opacity:0.90612242;fill:#ffffff;fill-opacity:1;stroke:none"
+       style="opacity:0.13061224;fill:#ffffff;fill-opacity:1;stroke:none"
        id="rect3004-9"
        width="96.722107"
        height="68.602592"
@@ -120,12 +88,12 @@
        ry="4.6511703"
        transform="matrix(1,0,0.27976928,0.96006726,0,0)" />
     <path
-       style="opacity:0.7;fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3840)"
+       style="opacity:0.13061224;fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3840)"
        d="m 88.332587,952.4492 c -2.77,0 -5,2.51772 -5,5.64512 l 0,1.48185 -55.46875,0 c -2.77,0 -5,2.51772 -5,5.64512 l 0,62.83731 c 0,3.1275 2.23,5.6452 5,5.6452 l 86.718753,0 c 2.77,0 5,-2.5177 5,-5.6452 l 0,-28.40207 c 0.0799,-0.40201 0.125,-0.84014 0.125,-1.27016 l 0,-40.29205 c 0,-3.1274 -2.23,-5.64512 -5,-5.64512 l -26.375003,0 z"
        id="rect3004-8"
        inkscape:connector-curvature="0" />
     <rect
-       style="opacity:0.90612242;fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3866)"
+       style="opacity:0.08571429;fill:#ffffff;fill-opacity:1;stroke:none;filter:url(#filter3866)"
        id="rect3004-9-8"
        width="96.722107"
        height="68.602592"

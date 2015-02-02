@@ -96,7 +96,12 @@ public class Item implements Parcelable
 	// corresponding to item type
 	if (image == null)
 	{
-	    image = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.icon);
+	    int res;
+	    String type = this.get("type");
+	    if (type.equals("folder")) res = R.drawable.folder;
+	    else if (type.equals("radiostation")) res = R.drawable.radiostation;
+	    else res = R.drawable.placeholder;
+	    image = BitmapFactory.decodeResource(ctx.getResources(), res);
 	}
     }
 

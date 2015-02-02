@@ -98,6 +98,9 @@ public class Item implements Parcelable
 	{
 	    int res;
 	    String type = this.get("type");
+	    if (type == null)
+		type = "";
+
 	    if (type.equals("folder")) res = R.drawable.folder;
 	    else if (type.equals("radiostation")) res = R.drawable.radiostation;
 	    else res = R.drawable.placeholder;

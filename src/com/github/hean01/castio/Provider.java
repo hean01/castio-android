@@ -53,6 +53,25 @@ public class Provider implements Parcelable
 	return obj.optString(parts[parts.length - 1], null);
     }
 
+    public String getVersion()
+    {
+	String value = "undefined";
+	JSONArray arr = object.optJSONArray("version");
+	if (arr == null)
+	    return value;
+
+	try
+        {
+	    value = arr.getInt(0) + "." + arr.getInt(1) + "." + arr.getInt(2);
+	}
+	catch (JSONException e)
+	{
+	    e.printStackTrace();
+	}
+
+	return value;
+    }
+
     public Bitmap getImage()
     {
 	return image;

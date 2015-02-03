@@ -77,7 +77,7 @@ public class ProviderDetailsActivity extends MainActivity
 	LinearLayout md = (LinearLayout)view.findViewById(R.id.metadata);
 
 	String value;
-	value = provider.get("version");
+	value = provider.getVersion();
 	if (value != null)
 	    md.addView(createMetadataView("Version", value, md));
 
